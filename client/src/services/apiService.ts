@@ -1,0 +1,54 @@
+import { apiRequest } from "../utils";
+
+export class ApiService {
+  private endpoint: string;
+
+  constructor(endpoint: string) {
+    this.endpoint = endpoint;
+  }
+
+  async get(params?: Record<string, unknown>): Promise<unknown> {
+    return apiRequest({
+      url: this.endpoint,
+      method: "GET",
+      params,
+    });
+  }
+
+  async post(data: Record<string, unknown>): Promise<unknown> {
+    return apiRequest({
+      url: this.endpoint,
+      method: "POST",
+      data,
+    });
+  }
+
+  async put(
+    id: string | number,
+    data: Record<string, unknown>
+  ): Promise<unknown> {
+    return apiRequest({
+      url: `${this.endpoint}/${id}`,
+      method: "PUT",
+      data,
+    });
+  }
+
+  async patch(
+    id: string | number,
+    data: Record<string, unknown>
+  ): Promise<unknown> {
+    return apiRequest({
+      url: `${this.endpoint}/${id}`,
+      method: "PATCH",
+      data,
+    });
+  }
+
+  async delete(id: string | number): Promise<unknown> {
+    return apiRequest({
+      url: `${this.endpoint}/${id}`,
+      method: "DELETE",
+    });
+  }
+}
