@@ -6,7 +6,7 @@ import { Role } from "../generated/prisma";
 
 export async function createUser(req: Request, res: Response): Promise<any> {
   try {
-    const { name, email, password, address } = req.body;
+    const { name, email, password, address, role } = req.body;
 
     const existingUser = await prisma.user.findUnique({
       where: { email },
@@ -27,6 +27,7 @@ export async function createUser(req: Request, res: Response): Promise<any> {
         email,
         password: hashedPassword,
         address,
+        role,
       },
     });
 

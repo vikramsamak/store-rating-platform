@@ -37,6 +37,19 @@ export const createUserValidation = [
     .withMessage("Address is required.")
     .isLength({ max: 400 })
     .withMessage("Address must be at most 400 characters long."),
+
+  body("role")
+    .isString()
+    .withMessage("Role must be a string.")
+    .notEmpty()
+    .withMessage("Role is required.")
+    .custom((value) => {
+      const validRoles = Object.values(Role);
+      if (!validRoles.includes(value)) {
+        throw new Error("Invalid role value.");
+      }
+      return true;
+    }),
 ];
 
 export const getUserValidation = [
