@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import { prisma } from "../lib";
 import { compare, genSaltSync, hash } from "bcryptjs";
-import jwt from "jsonwebtoken";
 import { JWT_EXPIRY, JWT_MAX_AGE, JWT_TOKEN } from "../constants";
 import { envConfig } from "../config/envConfig";
+import { successResponse, errorResponse } from "../utils";
+import jwt from "jsonwebtoken";
 
 export async function signUp(req: Request, res: Response): Promise<void> {
   try {
@@ -12,18 +13,19 @@ export async function signUp(req: Request, res: Response): Promise<void> {
     const existingUser = await prisma.user.findUnique({ where: { email } });
 
     if (existingUser) {
-      res.status(409).json({ success: false, error: "User already exists." });
+      res.status(409).json(errorResponse({ message: "User already exists." }));
       return;
     }
 
     if (password !== confirmPassword) {
       res
         .status(400)
-        .json({ success: false, error: "Passwords do not match." });
+        .json(errorResponse({ message: "Passwords do not match." }));
       return;
     }
 
     const salt = genSaltSync(10);
+
     const hashedPassword = await hash(password, salt);
 
     await prisma.user.create({
@@ -37,10 +39,10 @@ export async function signUp(req: Request, res: Response): Promise<void> {
 
     res
       .status(201)
-      .json({ success: true, message: "User registered successfully." });
+      .json(successResponse({ message: "User registered successfully." }));
   } catch (error) {
     console.error("Error during signup:", error);
-    res.status(500).json({ error: "Internal server error." });
+    res.status(500).json(errorResponse({ message: "Internal server error." }));
   }
 }
 
@@ -61,14 +63,14 @@ export async function signIn(req: Request, res: Response): Promise<void> {
     });
 
     if (!user) {
-      res.status(401).json({ success: false, error: "Invalid credentials." });
+      res.status(401).json(errorResponse({ message: "Invalid credentials." }));
       return;
     }
 
     const isPasswordCorrect = await compare(password, user.password);
 
     if (!isPasswordCorrect) {
-      res.status(401).json({ success: false, error: "Invalid credentials." });
+      res.status(401).json(errorResponse({ message: "Invalid credentials." }));
       return;
     }
 
@@ -93,14 +95,15 @@ export async function signIn(req: Request, res: Response): Promise<void> {
       role: user.role,
     };
 
-    res.status(200).json({
-      success: true,
-      message: "User successfully signed in.",
-      data: userData,
-    });
+    res.status(200).json(
+      successResponse({
+        message: "User successfully signed in.",
+        data: userData,
+      })
+    );
   } catch (error) {
     console.error("Error during sign in:", error);
-    res.status(500).json({ success: false, error: "Internal server error." });
+    res.status(500).json(errorResponse({ message: "Internal server error." }));
   }
 }
 
@@ -108,9 +111,9 @@ export async function signOut(req: Request, res: Response): Promise<any> {
   try {
     res.clearCookie(JWT_TOKEN);
 
-    res.json({ success: true, message: "User signed out successfully" });
+    res.json(successResponse({ message: "User signed out successfully" }));
   } catch (error) {
     console.error("Error while signout", error);
-    res.status(500).json({ success: false, error: "Internal server error" });
+    res.status(500).json(errorResponse({ message: "Internal server error" }));
   }
 }
