@@ -6,15 +6,43 @@ import {
   getUsers,
   updateUser,
 } from "../controllers";
+import {
+  accessMiddelware,
+  authMiddelware,
+  validationMiddelware,
+} from "../middelwares";
+import { getUserValidation } from "../validations";
+import {
+  createUserValidation,
+  deleteUserValidation,
+  getUserByIdValidation,
+  updateUserValidation,
+} from "../validations/userValidations";
 
 export const userRouter = Router();
 
-userRouter.get("/", getUsers);
+userRouter.use(authMiddelware);
 
-userRouter.get("/:id", getUserById);
+userRouter.use(accessMiddelware);
 
-userRouter.post("/", createUser);
+userRouter.get("/", validationMiddelware(getUserValidation), getUsers);
 
-userRouter.patch("/:id", updateUser);
+userRouter.get(
+  "/:id",
+  validationMiddelware(getUserByIdValidation),
+  getUserById
+);
 
-userRouter.delete("/:id", deleteUser);
+userRouter.post("/", validationMiddelware(createUserValidation), createUser);
+
+userRouter.patch(
+  "/:id",
+  validationMiddelware(updateUserValidation),
+  updateUser
+);
+
+userRouter.delete(
+  "/:id",
+  validationMiddelware(deleteUserValidation),
+  deleteUser
+);

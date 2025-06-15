@@ -6,15 +6,47 @@ import {
   getRatings,
   updateRating,
 } from "../controllers";
+import {
+  accessMiddelware,
+  authMiddelware,
+  validationMiddelware,
+} from "../middelwares";
+import {
+  createRatingValidation,
+  deleteRatingValidation,
+  getRatingValidation,
+  updateRatingValidation,
+} from "../validations";
+import { getRatingByIdValidation } from "../validations/ratingValidations";
 
 export const ratingRouter = Router();
 
-ratingRouter.get("/", getRatings);
+ratingRouter.use(authMiddelware);
 
-ratingRouter.get("/:id", getRatingById);
+ratingRouter.use(accessMiddelware);
 
-ratingRouter.post("/", createRating);
+ratingRouter.get("/", validationMiddelware(getRatingValidation), getRatings);
 
-ratingRouter.patch("/:id", updateRating);
+ratingRouter.get(
+  "/:id",
+  validationMiddelware(getRatingByIdValidation),
+  getRatingById
+);
 
-ratingRouter.delete("/:id", deleteRating);
+ratingRouter.post(
+  "/",
+  validationMiddelware(createRatingValidation),
+  createRating
+);
+
+ratingRouter.patch(
+  "/:id",
+  validationMiddelware(updateRatingValidation),
+  updateRating
+);
+
+ratingRouter.delete(
+  "/:id",
+  validationMiddelware(deleteRatingValidation),
+  deleteRating
+);
