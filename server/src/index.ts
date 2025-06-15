@@ -1,12 +1,12 @@
 import express, { Request, Response, urlencoded, json } from "express";
-import { config } from "dotenv";
+import { config as loadEnv } from "dotenv";
 import { authRouter, ratingRouter, storeRouter, userRouter } from "./routes";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import morgan from "morgan"
+import morgan from "morgan";
 
 // Load environment variables from .env file
-config();
+loadEnv();
 
 const app = express();
 
