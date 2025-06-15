@@ -209,7 +209,7 @@ export async function deleteUser(req: Request, res: Response): Promise<any> {
       where: { id: userId },
     });
 
-    return res
+    res
       .status(200)
       .json(successResponse({ message: "User deleted successfully." }));
   } catch (error) {
