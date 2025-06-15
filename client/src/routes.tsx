@@ -3,6 +3,7 @@ import { DashboardLayout } from "./layouts";
 import {
   ErrorPage,
   LandingPage,
+  NotFoundPage,
   Profile,
   SigninPage,
   SignupPage,
@@ -45,7 +46,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: "*",
-        element: <div>Not found page</div>,
+        element: <NotFoundPage />,
         errorElement: <ErrorPage />,
       },
     ],
