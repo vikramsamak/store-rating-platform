@@ -4,4 +4,7 @@ export async function accessMiddleware(
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<any> {}
+): Promise<any> {
+  //just for now
+  next();
+}
