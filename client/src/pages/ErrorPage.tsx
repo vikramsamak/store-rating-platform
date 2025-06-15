@@ -21,7 +21,7 @@ export const ErrorPage: React.FC<ErrorPageProps> = ({
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted">
+    <div className="min-h-screen flex items-center justify-center bg-muted p-4">
       <Alert className="max-w-md w-full shadow-lg">
         <Terminal className="h-5 w-5" />
         <AlertTitle className="text-lg">Something went wrong</AlertTitle>
