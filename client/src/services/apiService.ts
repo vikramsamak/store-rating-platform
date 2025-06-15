@@ -1,7 +1,7 @@
 import { apiRequest } from "../utils";
 
 export class ApiService {
-  private endpoint: string;
+  public endpoint: string;
 
   constructor(endpoint: string) {
     this.endpoint = endpoint;
@@ -12,6 +12,13 @@ export class ApiService {
       url: this.endpoint,
       method: "GET",
       params,
+    });
+  }
+
+  async getById(id: string | number): Promise<unknown> {
+    return apiRequest({
+      url: `${this.endpoint}/by-id/${id}`,
+      method: "GET",
     });
   }
 
