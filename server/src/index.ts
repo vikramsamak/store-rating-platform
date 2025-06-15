@@ -2,6 +2,7 @@ import express, { Request, Response, urlencoded, json } from "express";
 import { config } from "dotenv";
 import { authRouter, ratingRouter, storeRouter, userRouter } from "./routes";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 // Load environment variables from .env file
 config();
@@ -22,6 +23,8 @@ app.use(
     methods: ["GET", "POST", "PATCH", "DELETE"],
   })
 );
+
+app.use(cookieParser());
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Welcome To Store Rating Platform.");
