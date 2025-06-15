@@ -3,6 +3,7 @@ import { config } from "dotenv";
 import { authRouter, ratingRouter, storeRouter, userRouter } from "./routes";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import morgan from "morgan"
 
 // Load environment variables from .env file
 config();
@@ -26,6 +27,8 @@ app.use(
 
 app.use(cookieParser());
 
+app.use(morgan("dev"));
+
 app.get("/", (req: Request, res: Response) => {
   res.send("Welcome To Store Rating Platform.");
 });
@@ -38,6 +41,13 @@ app.use("/api/user", userRouter);
 app.use("/api/store", storeRouter);
 
 app.use("/api/rating", ratingRouter);
+
+app.use("/api/*splat", (req, res) => {
+  res.status(404).json({
+    success: false,
+    message: "API endpoint not found.",
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
