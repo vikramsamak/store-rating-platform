@@ -1,2 +1,3 @@
-export const signUpValidation = "";
-export const signInValidation = "";
+export const signUpValidation = [];
+
+export const signInValidation = [];
