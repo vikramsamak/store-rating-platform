@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { DashboardLayout } from "./layouts";
 import {
+  DashboardHome,
   ErrorPage,
   LandingPage,
   NotFoundPage,
@@ -14,40 +15,40 @@ export const routes = createBrowserRouter([
   {
     path: "/",
     element: <LandingPage />,
-    errorElement: <ErrorPage />,
+    errorElement: <ErrorPage isDashboard={false} />,
   },
 
   {
-    path: "/login",
+    path: "/signin",
     element: <SigninPage />,
-    errorElement: <ErrorPage />,
+    errorElement: <ErrorPage isDashboard={false} />,
   },
 
   {
     path: "/signup",
     element: <SignupPage />,
-    errorElement: <ErrorPage />,
+    errorElement: <ErrorPage isDashboard={false} />,
   },
 
   {
     path: "/dashboard",
     element: <DashboardLayout />,
-    errorElement: <ErrorPage />,
+    errorElement: <ErrorPage isDashboard={true} />,
     children: [
       {
         index: true,
-        element: <div>Dashboard Home</div>,
-        errorElement: <ErrorPage />,
+        element: <DashboardHome />,
+        errorElement: <ErrorPage isDashboard={true} />,
       },
       {
         path: "profle",
         element: <Profile />,
-        errorElement: <ErrorPage />,
+        errorElement: <ErrorPage isDashboard={true} />,
       },
       {
         path: "*",
-        element: <NotFoundPage />,
-        errorElement: <ErrorPage />,
+        element: <NotFoundPage isDashboard={true} />,
+        errorElement: <ErrorPage isDashboard={true} />,
       },
     ],
   },
