@@ -28,7 +28,7 @@ ratingRouter.use(accessMiddleware);
 ratingRouter.get("/", validationMiddleware(getRatingValidation), getRatings);
 
 ratingRouter.get(
-  "/:id",
+  "/by-id/:id",
   validationMiddleware(getRatingByIdValidation),
   getRatingById
 );
