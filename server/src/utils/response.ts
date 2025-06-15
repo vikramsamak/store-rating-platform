@@ -1,5 +1,5 @@
 type SuccessResponseParams = {
-  message: string;
+  message?: string;
   data?: any;
 };
 
@@ -10,8 +10,8 @@ type ErrorResponseParams = {
 export function successResponse({ message, data }: SuccessResponseParams) {
   return {
     success: true,
-    message,
-    ...(data !== undefined ? { data } : {}),
+    ...(message ? { message } : {}),
+    ...(data ? { data } : {}),
   };
 }
 
