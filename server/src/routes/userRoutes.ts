@@ -7,9 +7,9 @@ import {
   updateUser,
 } from "../controllers";
 import {
-  accessMiddelware,
-  authMiddelware,
-  validationMiddelware,
+  accessMiddleware,
+  authMiddleware,
+  validationMiddleware,
 } from "../middelwares";
 import { getUserValidation } from "../validations";
 import {
@@ -21,28 +21,28 @@ import {
 
 export const userRouter = Router();
 
-userRouter.use(authMiddelware);
+userRouter.use(authMiddleware);
 
-userRouter.use(accessMiddelware);
+userRouter.use(accessMiddleware);
 
-userRouter.get("/", validationMiddelware(getUserValidation), getUsers);
+userRouter.get("/", validationMiddleware(getUserValidation), getUsers);
 
 userRouter.get(
   "/:id",
-  validationMiddelware(getUserByIdValidation),
+  validationMiddleware(getUserByIdValidation),
   getUserById
 );
 
-userRouter.post("/", validationMiddelware(createUserValidation), createUser);
+userRouter.post("/", validationMiddleware(createUserValidation), createUser);
 
 userRouter.patch(
   "/:id",
-  validationMiddelware(updateUserValidation),
+  validationMiddleware(updateUserValidation),
   updateUser
 );
 
 userRouter.delete(
   "/:id",
-  validationMiddelware(deleteUserValidation),
+  validationMiddleware(deleteUserValidation),
   deleteUser
 );

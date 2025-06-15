@@ -1,5 +1,5 @@
-export { accessMiddelware } from "./accessMiddelware";
+export { accessMiddleware } from "./accessMiddelware";
 
-export { authMiddelware } from "./authMiddelware";
+export { authMiddleware } from "./authMiddelware";
 
-export { validationMiddelware } from "./validationMiddelware";
+export { validationMiddleware } from "./validationMiddelware";

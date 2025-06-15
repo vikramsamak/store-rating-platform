@@ -1,12 +1,12 @@
 import { Router } from "express";
 import { signIn, signOut, signUp } from "../controllers";
-import { validationMiddelware } from "../middelwares";
+import { validationMiddleware } from "../middelwares";
 import { signInValidation, signUpValidation } from "../validations";
 
 export const authRouter = Router();
 
-authRouter.post("/signup", validationMiddelware(signUpValidation), signUp);
+authRouter.post("/signup", validationMiddleware(signUpValidation), signUp);
 
-authRouter.post("/signin", validationMiddelware(signInValidation), signIn);
+authRouter.post("/signin", validationMiddleware(signInValidation), signIn);
 
 authRouter.post("/signout", signOut);

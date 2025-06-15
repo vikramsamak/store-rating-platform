@@ -7,9 +7,9 @@ import {
   updateStore,
 } from "../controllers";
 import {
-  accessMiddelware,
-  authMiddelware,
-  validationMiddelware,
+  accessMiddleware,
+  authMiddleware,
+  validationMiddleware,
 } from "../middelwares";
 import {
   createStoreValidation,
@@ -21,28 +21,28 @@ import { getStoreByIdValidation } from "../validations/storeValidation";
 
 export const storeRouter = Router();
 
-storeRouter.use(authMiddelware);
+storeRouter.use(authMiddleware);
 
-storeRouter.use(accessMiddelware);
+storeRouter.use(accessMiddleware);
 
-storeRouter.get("/", validationMiddelware(getStoreValidation), getStores);
+storeRouter.get("/", validationMiddleware(getStoreValidation), getStores);
 
 storeRouter.get(
   "/:id",
-  validationMiddelware(getStoreByIdValidation),
+  validationMiddleware(getStoreByIdValidation),
   getStoreById
 );
 
-storeRouter.post("/", validationMiddelware(createStoreValidation), createStore);
+storeRouter.post("/", validationMiddleware(createStoreValidation), createStore);
 
 storeRouter.patch(
   "/:id",
-  validationMiddelware(updateStoreValidation),
+  validationMiddleware(updateStoreValidation),
   updateStore
 );
 
 storeRouter.delete(
   "/:id",
-  validationMiddelware(deleteStoreValidation),
+  validationMiddleware(deleteStoreValidation),
   deleteStore
 );

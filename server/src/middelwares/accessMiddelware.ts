@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
-export async function accessMiddelware(
+export async function accessMiddleware(
   req: Request,
   res: Response,
   next: NextFunction
