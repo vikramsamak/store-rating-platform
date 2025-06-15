@@ -2,13 +2,30 @@ import { DashBoardPageWrapper } from "@/components/Dashboard/DashBoardPageWrappe
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
 
-export const ErrorPage = () => {
+interface ErrorPageProps {
+  isDashboard?: boolean;
+}
+
+export const ErrorPage: React.FC<ErrorPageProps> = ({
+  isDashboard = false,
+}: ErrorPageProps) => {
+  if (isDashboard) {
+    return (
+      <DashBoardPageWrapper className="flex w-full h-full justify-center items-center">
+        <Alert className="max-w-md w-full shadow-lg" variant="destructive">
+          <Terminal className="h-5 w-5" />
+          <AlertTitle className="text-lg">Something went wrong</AlertTitle>
+        </Alert>
+      </DashBoardPageWrapper>
+    );
+  }
+
   return (
-    <DashBoardPageWrapper className="flex w-full h-full justify-center items-center">
-      <Alert className="max-w-md w-full shadow-lg" variant="destructive">
+    <div className="min-h-screen flex items-center justify-center bg-muted">
+      <Alert className="max-w-md w-full shadow-lg">
         <Terminal className="h-5 w-5" />
         <AlertTitle className="text-lg">Something went wrong</AlertTitle>
       </Alert>
-    </DashBoardPageWrapper>
+    </div>
   );
 };
