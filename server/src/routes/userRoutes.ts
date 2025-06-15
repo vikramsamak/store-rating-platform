@@ -28,7 +28,7 @@ userRouter.use(accessMiddleware);
 userRouter.get("/", validationMiddleware(getUserValidation), getUsers);
 
 userRouter.get(
-  "/:id",
+  "/by-id/:id",
   validationMiddleware(getUserByIdValidation),
   getUserById
 );

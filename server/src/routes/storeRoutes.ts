@@ -28,7 +28,7 @@ storeRouter.use(accessMiddleware);
 storeRouter.get("/", validationMiddleware(getStoreValidation), getStores);
 
 storeRouter.get(
-  "/:id",
+  "/by-id/:id",
   validationMiddleware(getStoreByIdValidation),
   getStoreById
 );
