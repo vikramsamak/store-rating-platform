@@ -1,9 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ValidationChain, validationResult } from "express-validator";
 
-export async function validationMiddelware(
-  validationChains: ValidationChain[]
-) {
+export function validationMiddelware(validationChains: ValidationChain[]) {
   return async (req: Request, res: Response, next: NextFunction) => {
     await Promise.all(
       validationChains.map((validation) => validation.run(req))
@@ -11,10 +9,11 @@ export async function validationMiddelware(
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({
+      res.status(400).json({
         success: false,
         errors: errors.array(),
       });
+      return;
     }
 
     next();
