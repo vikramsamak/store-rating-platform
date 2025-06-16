@@ -6,7 +6,7 @@ import { Skeleton } from "../ui/skeleton";
 import { User } from "@/services";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/use-auth";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 interface UserTableProps {
   searchQuery: string;
@@ -14,6 +14,18 @@ interface UserTableProps {
 
 export const UserTable: React.FC<UserTableProps> = ({ searchQuery }) => {
   const { authUser } = useAuth();
+
+  const [sortKey, setSortKey] = useState<string>("Name");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+
+  const handleSortChange = (key: string) => {
+    if (key === sortKey) {
+      setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
+    } else {
+      setSortKey(key);
+      setSortOrder("asc");
+    }
+  };
 
   const getUsers = async () => {
     try {
@@ -48,6 +60,34 @@ export const UserTable: React.FC<UserTableProps> = ({ searchQuery }) => {
     );
   }, [users, searchQuery]);
 
+  const sortedUsers = useMemo(() => {
+    if (!filteredUsers) return [];
+
+    return [...filteredUsers].sort((a, b) => {
+      const key = sortKey.toLowerCase();
+
+      let aVal = a[key as keyof typeof a];
+      let bVal = b[key as keyof typeof b];
+
+      if (key === "rating" || key === "storeRating") {
+        aVal = a.storeRating ?? 0;
+        bVal = b.storeRating ?? 0;
+      }
+
+      if (typeof aVal === "string" && typeof bVal === "string") {
+        return sortOrder === "asc"
+          ? aVal.localeCompare(bVal)
+          : bVal.localeCompare(aVal);
+      }
+
+      if (typeof aVal === "number" && typeof bVal === "number") {
+        return sortOrder === "asc" ? aVal - bVal : bVal - aVal;
+      }
+
+      return 0;
+    });
+  }, [filteredUsers, sortKey, sortOrder]);
+
   if (isLoading) {
     return <Skeleton className="h-full w-full" />;
   }
@@ -59,7 +99,11 @@ export const UserTable: React.FC<UserTableProps> = ({ searchQuery }) => {
   return (
     <GenericTable
       tableHeaders={["Name", "Email", "Address", "Role", "Rating"]}
-      data={filteredUsers ?? []}
+      sortableHeaders={["Name", "Email", "Role", "Rating"]}
+      sortKey={sortKey}
+      sortOrder={sortOrder}
+      onSortChange={handleSortChange}
+      data={sortedUsers}
       renderRow={(user: Usertype, i) => (
         <TableRow key={i}>
           <TableCell>{user.name}</TableCell>
