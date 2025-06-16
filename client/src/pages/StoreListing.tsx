@@ -26,7 +26,7 @@ export const StoreListing = () => {
     setRatingModalOpen(true);
   };
 
-  if (authUser?.role !== "USER") {
+  if (authUser && authUser?.role !== "USER") {
     return <Navigate to={"/dashboard/acessdenied"} />;
   }
 
