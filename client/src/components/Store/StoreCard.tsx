@@ -41,7 +41,7 @@ export const StoreCard: React.FC<StoreCardProps> = ({
 
       <div className="flex w-full justify-end">
         <Button variant="default" onClick={() => opneRatingModal(store)}>
-          Give Rating
+          {store.userRating?.value ? "Update Rating" : "Give Rating"}
         </Button>
       </div>
     </div>
