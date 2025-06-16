@@ -12,6 +12,7 @@ import {
   Store,
   Users,
   StoreListing,
+  Ratings,
 } from "./pages";
 
 //Routes
@@ -62,6 +63,11 @@ export const routes = createBrowserRouter([
       {
         path: "storelisting",
         element: <StoreListing />,
+        errorElement: <Error isDashboard={true} />,
+      },
+      {
+        path: "ratings",
+        element: <Ratings />,
         errorElement: <Error isDashboard={true} />,
       },
       {
