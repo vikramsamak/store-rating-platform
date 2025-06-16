@@ -9,7 +9,7 @@ import React, {
 
 export type AuthContextType = {
   authUser: User | null;
-  setAuthUser: Dispatch<SetStateAction<User | null>>;
+  updateAuthUser: Dispatch<SetStateAction<User | null>>;
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -33,11 +33,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
+  const updateAuthUser: Dispatch<SetStateAction<User | null>> = (value) => {
+    const newUserState = typeof value === "function" ? value(authUser) : value;
+
+    if (newUserState) {
+      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(newUserState));
+    } else {
+      localStorage.removeItem(AUTH_STORAGE_KEY);
+    }
+
+    setAuthUser(newUserState);
+  };
+
   return (
     <AuthContext.Provider
       value={{
         authUser,
-        setAuthUser,
+        updateAuthUser,
       }}
     >
       {children}
