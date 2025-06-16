@@ -5,19 +5,18 @@ import { CreateNewStoreForm } from "@/components/Store/CreateNewStoreForm";
 import { StoresTable } from "@/components/Store/StoresTable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-// import { useAuth } from "@/hooks/use-auth";
+import { useAuth } from "@/hooks/use-auth";
 import { useState } from "react";
-// import { Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 export const Store = () => {
-  // const { authUser } = useAuth();
+  const { authUser } = useAuth();
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isStoreModalOpen, setStoreModalOpen] = useState<boolean>(false);
 
-  // if (authUser?.role !== "SYSTEM_ADMINISTARTOR") {
-  //   return <Navigate to={"/dashboard/acessdenied"} />;
-  // }
+  if (authUser?.role !== "SYSTEM_ADMINISTARTOR") {
+    return <Navigate to={"/dashboard/acessdenied"} />;
+  }
 
   return (
     <DashBoardPageWrapper pageTitle="Store">
