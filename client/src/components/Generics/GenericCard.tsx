@@ -10,11 +10,12 @@ import {
 import { cn } from "@/lib/utils";
 
 interface GenericCardProps {
-  cardTitle: string;
+  cardTitle?: string;
   cardDescription?: string;
   cardAction?: React.ReactNode;
   cardContent: React.ReactNode;
   cardFooter?: React.ReactNode;
+  className?: string;
 }
 
 export const GenericCard: React.FC<GenericCardProps> = ({
@@ -23,11 +24,12 @@ export const GenericCard: React.FC<GenericCardProps> = ({
   cardAction,
   cardContent,
   cardFooter,
+  className,
 }) => {
   return (
-    <Card className={cn("min-w-xs sm:min-w-sm md:min-w-md")}>
+    <Card className={cn("min-w-xs sm:min-w-sm md:min-w-md", className)}>
       <CardHeader>
-        <CardTitle>{cardTitle}</CardTitle>
+        {cardTitle && <CardTitle>{cardTitle}</CardTitle>}
         {cardDescription && (
           <CardDescription>{cardDescription}</CardDescription>
         )}
