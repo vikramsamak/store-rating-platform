@@ -13,6 +13,10 @@ interface GenericTableProps<T> {
   tableHeaders: string[];
   data: T[];
   renderRow: (item: T, index: number) => React.ReactNode;
+  sortableHeaders?: string[];
+  sortKey?: string;
+  sortOrder?: "asc" | "desc";
+  onSortChange?: (key: string) => void;
 }
 
 export const GenericTable = <T,>({
@@ -20,6 +24,10 @@ export const GenericTable = <T,>({
   tableHeaders,
   data,
   renderRow,
+  onSortChange,
+  sortKey,
+  sortOrder,
+  sortableHeaders,
 }: GenericTableProps<T>) => {
   return (
     <Table>
@@ -27,9 +35,21 @@ export const GenericTable = <T,>({
 
       <TableHeader>
         <TableRow>
-          {tableHeaders.map((header, i) => (
-            <TableHead key={i}>{header}</TableHead>
-          ))}
+          {tableHeaders.map((header, i) => {
+            const isSortable = sortableHeaders?.includes(header);
+            const isActive = sortKey === header;
+
+            return (
+              <TableHead
+                key={i}
+                onClick={() => isSortable && onSortChange?.(header)}
+                className={isSortable ? "cursor-pointer select-none" : ""}
+              >
+                {header}
+                {isActive && (sortOrder === "asc" ? " ↑" : " ↓")}
+              </TableHead>
+            );
+          })}
         </TableRow>
       </TableHeader>
 
