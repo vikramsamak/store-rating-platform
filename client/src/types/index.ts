@@ -49,7 +49,7 @@ export type Store = {
   name: string;
   email: string;
   address: string;
-  rating: number;
+  ratings: unknown[];
   averageRating: number;
   userRating?: {
     id: string;
