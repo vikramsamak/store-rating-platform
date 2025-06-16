@@ -58,7 +58,7 @@ export const UserTable: React.FC<UserTableProps> = ({ searchQuery }) => {
 
   return (
     <GenericTable
-      tableHeaders={["Name", "Email", "Address", "Role"]}
+      tableHeaders={["Name", "Email", "Address", "Role", "Rating"]}
       data={filteredUsers ?? []}
       renderRow={(user: Usertype, i) => (
         <TableRow key={i}>
@@ -67,6 +67,11 @@ export const UserTable: React.FC<UserTableProps> = ({ searchQuery }) => {
           <TableCell>{user.address}</TableCell>
           <TableCell className="capitalize">
             {user.role.toLowerCase().replace("_", " ")}
+          </TableCell>
+          <TableCell>
+            {user.role === "STORE_OWNER"
+              ? user.storeRating?.toFixed(2) ?? "0.00"
+              : "—"}
           </TableCell>
         </TableRow>
       )}
