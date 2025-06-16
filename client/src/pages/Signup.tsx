@@ -17,11 +17,15 @@ import { Auth } from "@/services";
 import { toast } from "sonner";
 import { useState } from "react";
 import { LoadingSpinner } from "@/components/Generics/LoadingSpinner";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/use-auth";
 
 export const SignupPage = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
+
   const navigate = useNavigate();
+
+  const { authUser } = useAuth();
 
   const signupValidationSchema = z
     .object({
@@ -70,6 +74,7 @@ export const SignupPage = () => {
   async function onSubmit(values: z.infer<typeof signupValidationSchema>) {
     if (isLoading) return;
     try {
+      setLoading(true);
       const response = await Auth.signUp(values);
       if (response.success) {
         toast.success(response.message);
@@ -82,6 +87,10 @@ export const SignupPage = () => {
     } finally {
       setLoading(false);
     }
+  }
+
+  if (authUser) {
+    return <Navigate to={"/dashboard"} />;
   }
 
   return (
