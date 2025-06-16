@@ -11,3 +11,9 @@ export interface ApiRequestOptions {
   responseType?: AxiosRequestConfig["responseType"];
   returnFullResponse?: boolean;
 }
+
+export type SuccessApiResponse = {
+  success: boolean;
+  message: string;
+  data?: unknown;
+};
