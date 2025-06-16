@@ -10,6 +10,7 @@ import {
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
+import { prisma } from "./lib";
 
 // Load environment variables from .env file
 loadEnv();
@@ -58,5 +59,6 @@ app.use("/api/*splat", (req, res) => {
 });
 
 app.listen(PORT, () => {
+  prisma.$connect();
   console.log(`Server is running on http://localhost:${PORT}`);
 });
