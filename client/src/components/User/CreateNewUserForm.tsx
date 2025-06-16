@@ -16,7 +16,7 @@ import { User } from "@/services";
 import { toast } from "sonner";
 import { useState } from "react";
 import { LoadingSpinner } from "@/components/Generics/LoadingSpinner";
-import { useMutation } from "@tanstack/react-query";
+import { Query, useMutation, useQueryClient } from "@tanstack/react-query";
 import { GenericSelect } from "../Generics/GenericSelect";
 import type { BaseFormField, GenericSelectOption } from "@/types";
 
@@ -28,6 +28,8 @@ export const CreateNewUserForm: React.FC<CreateNewUserFormProps> = ({
   closeUserModal,
 }) => {
   const [isLoading, setLoading] = useState<boolean>(false);
+
+  const queryClient = useQueryClient();
 
   interface NewUserFormField extends BaseFormField {
     name:
@@ -47,7 +49,6 @@ export const CreateNewUserForm: React.FC<CreateNewUserFormProps> = ({
       component: GenericSelect,
       props: {
         options: [
-          { label: "System Admin", value: "SYSTEM_ADMIN" },
           { label: "Admin", value: "ADMIN" },
           { label: "Store Owner", value: "STORE_OWNER" },
           { label: "Normal User", value: "USER" },
@@ -73,7 +74,7 @@ export const CreateNewUserForm: React.FC<CreateNewUserFormProps> = ({
         .min(1, "Address is required.")
         .max(400, "Address must be at most 400 characters."),
 
-      role: z.enum(["SYSTEM_ADMIN", "ADMIN", "STORE_OWNER", "USER"], {
+      role: z.enum(["ADMIN", "STORE_OWNER", "USER"], {
         required_error: "Role is required.",
         invalid_type_error: "Invalid role selected.",
       }),
@@ -127,6 +128,9 @@ export const CreateNewUserForm: React.FC<CreateNewUserFormProps> = ({
   const { isPending, mutate } = useMutation({
     mutationFn: createNewUser,
     onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        predicate: (query: Query) => query.queryKey.includes("UPDATE_ON_USER"),
+      });
       toast.success(data?.message);
       closeUserModal();
     },
