@@ -5,3 +5,4 @@ export { SignupPage } from "./Signup";
 export { Profile } from "./Profile";
 export { NotFound } from "./NotFound";
 export { DashboardHome } from "./DashboardHome";
+export { AccessDenied } from "./AcessDenied";

@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { DashboardLayout } from "./layouts";
 import {
+  AccessDenied,
   DashboardHome,
   ErrorPage,
   LandingPage,
@@ -43,6 +44,11 @@ export const routes = createBrowserRouter([
       {
         path: "profle",
         element: <Profile />,
+        errorElement: <ErrorPage isDashboard={true} />,
+      },
+      {
+        path: "accessdenied",
+        element: <AccessDenied />,
         errorElement: <ErrorPage isDashboard={true} />,
       },
       {
