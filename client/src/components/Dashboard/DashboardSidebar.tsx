@@ -10,43 +10,55 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { APP_DETAILS } from "@/constants";
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
+import { Box, User } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const DashboardSidebar = ({
   ...props
 }: React.ComponentProps<typeof Sidebar>) => {
-  const items = [
+  const { authUser } = useAuth();
+
+  const COMMON_PAGES = [
     {
-      title: "Home",
-      url: "#",
-      icon: Home,
-    },
-    {
-      title: "Inbox",
-      url: "#",
-      icon: Inbox,
-    },
-    {
-      title: "Calendar",
-      url: "#",
-      icon: Calendar,
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: Search,
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings,
+      title: "Profile",
+      path: "profle",
+      icon: User,
     },
   ];
+
+  const SYSTEM_ADMIN_PAGES = [
+    {
+      title: "Users",
+      path: "users",
+      icon: User,
+    },
+    {
+      title: "Stores",
+      path: "stores",
+      icon: Box,
+    },
+  ];
+
+  const NORMAL_USER__PAGES = [...COMMON_PAGES];
+
+  const STORE_OWNER_PAGES = [...COMMON_PAGES];
+
+  const items =
+    authUser?.role === "SYSTEM_ADMIN"
+      ? SYSTEM_ADMIN_PAGES
+      : authUser?.role === "USER"
+      ? NORMAL_USER__PAGES
+      : authUser?.role === "STORE_OWNER"
+      ? STORE_OWNER_PAGES
+      : [];
 
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <div className="p-2 w-full font-bold text-base">{APP_DETAILS.appName}</div>
+        <div className="p-2 w-full font-bold text-base">
+          {APP_DETAILS.appName}
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -55,10 +67,10 @@ export const DashboardSidebar = ({
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <Link to={`/dashboard/${item.path}`}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
