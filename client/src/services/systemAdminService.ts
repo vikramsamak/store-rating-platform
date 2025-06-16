@@ -7,13 +7,10 @@ export class SystemAdminService extends ApiService {
     super(endpoint);
   }
 
-  async getOverview(
-    data: Record<string, unknown>
-  ): Promise<SuccessApiResponse> {
+  async getOverview(): Promise<SuccessApiResponse> {
     return apiRequest({
       url: `${this.endpoint}/overview`,
-      method: "POST",
-      data,
+      method: "GET",
     });
   }
 }
