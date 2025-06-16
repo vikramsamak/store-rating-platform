@@ -88,8 +88,8 @@ export const Profile = () => {
             </p>
             <p className="font-bold">
               Role :
-              <span className="font-thin ml-2">
-                {authUser?.role.toLowerCase().replace("_", "")}
+              <span className="font-thin ml-2 capitalize">
+                {authUser?.role.toLowerCase().replace("_", " ")}
               </span>
             </p>
             <Form {...form}>

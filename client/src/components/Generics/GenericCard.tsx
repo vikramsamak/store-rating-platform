@@ -27,7 +27,7 @@ export const GenericCard: React.FC<GenericCardProps> = ({
   className,
 }) => {
   return (
-    <Card className={cn("min-w-xs sm:min-w-sm md:min-w-md", className)}>
+    <Card className={cn("min-w-xs sm:min-w-sm md:min-w-md h-full", className)}>
       <CardHeader>
         {cardTitle && <CardTitle>{cardTitle}</CardTitle>}
         {cardDescription && (
@@ -38,7 +38,7 @@ export const GenericCard: React.FC<GenericCardProps> = ({
       <CardContent>{cardContent}</CardContent>
       {cardFooter && (
         <CardFooter>
-          <p>Card Footer</p>
+          <p>{cardFooter}</p>
         </CardFooter>
       )}
     </Card>
