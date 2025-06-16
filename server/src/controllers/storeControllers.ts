@@ -58,28 +58,29 @@ export async function getStores(req: Request, res: Response): Promise<any> {
       ...(address ? { address } : {}),
     };
 
+    const currentUser = req.user;
+
     const stores = await prisma.store.findMany({
       where: filter,
       select: {
         id: true,
         name: true,
         email: true,
+        address: true,
+        owner: {
+          select: { id: true, name: true },
+        },
         ratings: {
           select: {
+            id: true,
             value: true,
+            userId: true,
             user: {
               select: {
                 id: true,
                 name: true,
               },
             },
-          },
-        },
-        address: true,
-        owner: {
-          select: {
-            id: true,
-            name: true,
           },
         },
       },
@@ -92,14 +93,26 @@ export async function getStores(req: Request, res: Response): Promise<any> {
 
     const storesWithAverage = stores.map((store) => {
       const ratingValues = store.ratings.map((r) => r.value);
+
       const averageRating =
         ratingValues.length > 0
-          ? ratingValues.reduce((a, b) => a + b, 0) / ratingValues.length
+          ? Number(
+              (
+                ratingValues.reduce((sum, val) => sum + val, 0) /
+                ratingValues.length
+              ).toFixed(2)
+            )
+          : 0;
+
+      const userRating =
+        currentUser?.role === "USER"
+          ? store.ratings.find((r) => r.userId === currentUser.id) ?? null
           : null;
 
       return {
         ...store,
-        averageRating: averageRating ? +averageRating.toFixed(2) : 0,
+        averageRating,
+        userRating,
       };
     });
 
