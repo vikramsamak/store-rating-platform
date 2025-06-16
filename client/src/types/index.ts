@@ -17,3 +17,10 @@ export type SuccessApiResponse = {
   message: string;
   data?: unknown;
 };
+
+export type BaseFormField = {
+  label: string;
+  component: React.ElementType;
+  props?: Record<string, unknown>;
+  description?: string;
+};
