@@ -28,8 +28,10 @@ export const GenericCard: React.FC<GenericCardProps> = ({
     <Card className={cn("min-w-xs sm:min-w-sm md:min-w-md")}>
       <CardHeader>
         <CardTitle>{cardTitle}</CardTitle>
-        {cardDescription && <CardDescription>Card Description</CardDescription>}
-        {cardAction && <CardAction>Card Action</CardAction>}
+        {cardDescription && (
+          <CardDescription>{cardDescription}</CardDescription>
+        )}
+        {cardAction && <CardAction>{cardAction}</CardAction>}
       </CardHeader>
       <CardContent>{cardContent}</CardContent>
       {cardFooter && (
