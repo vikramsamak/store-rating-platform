@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,10 +18,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { signinFormFields } from "@/constants";
+import { useAuth } from "@/hooks/use-auth";
+import type { User } from "@/types";
 
 export const SigninPage = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
+
   const navigate = useNavigate();
+
+  const { authUser, updateAuthUser } = useAuth();
 
   const signupValidationSchema = z.object({
     email: z.string().trim().email("Email must be a valid email address."),
@@ -48,9 +53,11 @@ export const SigninPage = () => {
   async function onSubmit(values: z.infer<typeof signupValidationSchema>) {
     if (isLoading) return;
     try {
+      setLoading(true);
       const response = await Auth.signIn(values);
       if (response.success) {
         toast.success(response.message);
+        updateAuthUser(response.data as User);
         navigate("/dashboard");
       }
     } catch (error) {
@@ -60,6 +67,10 @@ export const SigninPage = () => {
     } finally {
       setLoading(false);
     }
+  }
+
+  if (authUser) {
+    return <Navigate to={"/dashboard"} />;
   }
 
   return (
