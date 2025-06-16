@@ -32,3 +32,8 @@ export type User = {
   email: string;
   role: string;
 };
+
+export type Stat = {
+  label: string;
+  value: string | number;
+};
