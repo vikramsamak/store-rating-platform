@@ -4,7 +4,7 @@ import {
   DashboardHome,
   ErrorPage,
   LandingPage,
-  NotFoundPage,
+  NotFound,
   Profile,
   SigninPage,
   SignupPage,
@@ -47,7 +47,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: "*",
-        element: <NotFoundPage isDashboard={true} />,
+        element: <NotFound isDashboard={true} />,
         errorElement: <ErrorPage isDashboard={true} />,
       },
     ],

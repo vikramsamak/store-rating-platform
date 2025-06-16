@@ -7,7 +7,7 @@ interface NotFoundPageProps {
   isDashboard?: boolean;
 }
 
-export const NotFoundPage: React.FC<NotFoundPageProps> = ({
+export const NotFound: React.FC<NotFoundPageProps> = ({
   isDashboard = false,
 }: NotFoundPageProps) => {
   if (isDashboard) {
