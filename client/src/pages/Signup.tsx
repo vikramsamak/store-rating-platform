@@ -113,9 +113,7 @@ export const SignupPage = () => {
                         <item.component {...item.props} {...field} />
                       </FormControl>
                       {item.description && (
-                        <FormDescription>
-                          This is your public display name.
-                        </FormDescription>
+                        <FormDescription>{item.description}</FormDescription>
                       )}
                       <FormMessage />
                     </FormItem>
