@@ -9,7 +9,7 @@ export interface ApiRequestOptions {
   baseURL?: string;
   timeout?: number;
   responseType?: AxiosRequestConfig["responseType"];
-  returnFullResponse?: boolean;
+  withCredentials: boolean;
 }
 
 export type SuccessApiResponse = {

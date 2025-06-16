@@ -14,6 +14,7 @@ export async function apiRequest(
     baseURL = envConfig.API_BASE_URL,
     timeout = 10000,
     responseType = "json",
+    withCredentials = true,
   } = options;
 
   try {
@@ -29,6 +30,7 @@ export async function apiRequest(
       baseURL,
       timeout,
       responseType,
+      withCredentials,
     });
 
     return response.data;
