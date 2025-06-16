@@ -42,3 +42,10 @@ export type GenericSelectOption = {
   label: string;
   value: string;
 };
+
+export type Store = {
+  name: string;
+  email: string;
+  address: string;
+  rating: number;
+};
