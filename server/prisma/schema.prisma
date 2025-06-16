@@ -22,6 +22,7 @@ model User {
 }
 
 enum Role {
+  SYSTEM_ADMIN
   ADMIN
   USER
   STORE_OWNER
