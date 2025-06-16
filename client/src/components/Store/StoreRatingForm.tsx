@@ -102,7 +102,7 @@ export const StoreRatingForm: React.FC<StoreRatingFormProps> = ({
         onClick={submitRating}
         disabled={iscreatePending || isupdatePending}
       >
-        {selectedStore?.userRating ? "Update" : "Submit"}
+        {selectedStore?.userRating ? "Update Rating" : "Submit Rating"}
       </Button>
     </div>
   );
