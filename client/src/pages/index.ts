@@ -6,3 +6,4 @@ export { Profile } from "./Profile";
 export { NotFound } from "./NotFound";
 export { DashboardHome } from "./DashboardHome";
 export { AccessDenied } from "./AcessDenied";
+export { Users } from "./Users";
