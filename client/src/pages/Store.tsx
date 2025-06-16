@@ -14,7 +14,7 @@ export const Store = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isStoreModalOpen, setStoreModalOpen] = useState<boolean>(false);
 
-  if (authUser?.role !== "SYSTEM_ADMINISTARTOR") {
+  if (authUser?.role !== "SYSTEM_ADMIN") {
     return <Navigate to={"/dashboard/acessdenied"} />;
   }
 

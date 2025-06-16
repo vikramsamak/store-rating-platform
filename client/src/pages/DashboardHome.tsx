@@ -1,10 +1,20 @@
 import { DashBoardPageWrapper } from "@/components/Dashboard/DashBoardPageWrapper";
 import { Stats } from "@/components/Dashboard/Stats";
+import { useAuth } from "@/hooks/use-auth";
 
 export const DashboardHome = () => {
+  const { authUser } = useAuth();
   return (
     <DashBoardPageWrapper pageTitle="Home">
-      <Stats />
+      {authUser?.role === "SYSTEM_ADMIN" ? (
+        <Stats />
+      ) : (
+        <div className="flex justify-center items-center w-full h-full">
+          <p className="font-medium text-2xl">
+            Welocome to store rating platform
+          </p>
+        </div>
+      )}
     </DashBoardPageWrapper>
   );
 };
