@@ -63,8 +63,10 @@ export async function getStores(req: Request, res: Response): Promise<any> {
       select: {
         id: true,
         name: true,
+        email: true,
         ratings: {
           select: {
+            value: true,
             user: {
               select: {
                 id: true,
@@ -88,10 +90,23 @@ export async function getStores(req: Request, res: Response): Promise<any> {
       return;
     }
 
+    const storesWithAverage = stores.map((store) => {
+      const ratingValues = store.ratings.map((r) => r.value);
+      const averageRating =
+        ratingValues.length > 0
+          ? ratingValues.reduce((a, b) => a + b, 0) / ratingValues.length
+          : null;
+
+      return {
+        ...store,
+        averageRating: averageRating ? +averageRating.toFixed(2) : 0,
+      };
+    });
+
     res.status(200).json(
       successResponse({
         message: "Stores fetched successfully.",
-        data: stores,
+        data: storesWithAverage,
       })
     );
   } catch (error) {
