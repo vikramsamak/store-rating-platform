@@ -44,7 +44,9 @@ export const DasboardHeader = () => {
           orientation="vertical"
           className="mr-2 data-[orientation=vertical]:h-4"
         />
-        <p className="capitalize">{currentPage.pathname.replace("/", "")}</p>
+        <p className="capitalize">
+          {currentPage.pathname.replace("/dashboard/", "")}
+        </p>
       </div>
       <Button
         className="flex items-center justify-center h-10 w-10 rounded-full"
