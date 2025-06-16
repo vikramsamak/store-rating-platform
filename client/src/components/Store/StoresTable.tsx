@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/use-auth";
 import type { Store as StoreType } from "@/types";
 import type React from "react";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 interface StoresTableProps {
   searchQuery: string;
@@ -15,6 +15,17 @@ interface StoresTableProps {
 
 export const StoresTable: React.FC<StoresTableProps> = ({ searchQuery }) => {
   const { authUser } = useAuth();
+  const [sortKey, setSortKey] = useState<string>("Name");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+
+  const handleSortChange = (key: string) => {
+    if (key === sortKey) {
+      setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
+    } else {
+      setSortKey(key);
+      setSortOrder("asc");
+    }
+  };
 
   const getStores = async () => {
     try {
@@ -49,6 +60,28 @@ export const StoresTable: React.FC<StoresTableProps> = ({ searchQuery }) => {
     );
   }, [stores, searchQuery]);
 
+  const sortedStores = useMemo(() => {
+    if (!filteredStores) return [];
+
+    return [...filteredStores].sort((a, b) => {
+      const key = sortKey.toLowerCase() as keyof StoreType;
+      const aVal = a[key];
+      const bVal = b[key];
+
+      if (typeof aVal === "string" && typeof bVal === "string") {
+        return sortOrder === "asc"
+          ? aVal.localeCompare(bVal)
+          : bVal.localeCompare(aVal);
+      }
+
+      if (typeof aVal === "number" && typeof bVal === "number") {
+        return sortOrder === "asc" ? aVal - bVal : bVal - aVal;
+      }
+
+      return 0;
+    });
+  }, [filteredStores, sortKey, sortOrder]);
+
   if (isLoading) {
     return <Skeleton className="h-full w-full" />;
   }
@@ -60,7 +93,11 @@ export const StoresTable: React.FC<StoresTableProps> = ({ searchQuery }) => {
   return (
     <GenericTable
       tableHeaders={["Name", "Email", "Address", "Rating"]}
-      data={filteredStores ?? []}
+      sortableHeaders={["Name", "Email", "Rating"]}
+      sortKey={sortKey}
+      sortOrder={sortOrder}
+      onSortChange={handleSortChange}
+      data={sortedStores}
       renderRow={(store: StoreType, i) => (
         <TableRow key={i}>
           <TableCell>{store.name}</TableCell>
