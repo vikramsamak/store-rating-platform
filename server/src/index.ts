@@ -62,3 +62,12 @@ app.listen(PORT, () => {
   prisma.$connect();
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+const shutdown = async () => {
+  console.log("\nShutting down gracefully...");
+  await prisma.$disconnect();
+  process.exit(0);
+};
+
+process.on("SIGINT", shutdown);
+process.on("SIGTERM", shutdown);
