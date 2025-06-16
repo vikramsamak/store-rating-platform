@@ -25,7 +25,9 @@ export const GenericModal: React.FC<GenericModalProps> = ({
 }) => {
   return (
     <Dialog open={isModalOpen} onOpenChange={(open) => onOpenChange(open)}>
-      <DialogContent className={cn("min-w-[50vw] min-h-[50vh] overflow-auto")}>
+      <DialogContent
+        className={cn("min-w-[50vw] min-h-fit max-h-[50vh] overflow-auto")}
+      >
         <DialogHeader>
           <DialogTitle>{modalTitle}</DialogTitle>
           <DialogDescription>{modalDesc}</DialogDescription>
