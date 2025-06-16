@@ -1,3 +1,4 @@
+import type { SuccessApiResponse } from "@/types";
 import { apiRequest } from "../utils";
 
 export class ApiService {
@@ -7,7 +8,7 @@ export class ApiService {
     this.endpoint = endpoint;
   }
 
-  async get(params?: Record<string, unknown>): Promise<unknown> {
+  async get(params?: Record<string, unknown>): Promise<SuccessApiResponse> {
     return apiRequest({
       url: this.endpoint,
       method: "GET",
@@ -15,14 +16,14 @@ export class ApiService {
     });
   }
 
-  async getById(id: string | number): Promise<unknown> {
+  async getById(id: string | number): Promise<SuccessApiResponse> {
     return apiRequest({
       url: `${this.endpoint}/by-id/${id}`,
       method: "GET",
     });
   }
 
-  async post(data: Record<string, unknown>): Promise<unknown> {
+  async post(data: Record<string, unknown>): Promise<SuccessApiResponse> {
     return apiRequest({
       url: this.endpoint,
       method: "POST",
@@ -33,7 +34,7 @@ export class ApiService {
   async put(
     id: string | number,
     data: Record<string, unknown>
-  ): Promise<unknown> {
+  ): Promise<SuccessApiResponse> {
     return apiRequest({
       url: `${this.endpoint}/${id}`,
       method: "PUT",
@@ -44,7 +45,7 @@ export class ApiService {
   async patch(
     id: string | number,
     data: Record<string, unknown>
-  ): Promise<unknown> {
+  ): Promise<SuccessApiResponse> {
     return apiRequest({
       url: `${this.endpoint}/${id}`,
       method: "PATCH",
@@ -52,7 +53,7 @@ export class ApiService {
     });
   }
 
-  async delete(id: string | number): Promise<unknown> {
+  async delete(id: string | number): Promise<SuccessApiResponse> {
     return apiRequest({
       url: `${this.endpoint}/${id}`,
       method: "DELETE",
