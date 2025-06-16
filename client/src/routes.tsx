@@ -9,6 +9,7 @@ import {
   Profile,
   SigninPage,
   SignupPage,
+  Users,
 } from "./pages";
 
 //Routes
@@ -44,6 +45,11 @@ export const routes = createBrowserRouter([
       {
         path: "profle",
         element: <Profile />,
+        errorElement: <Error isDashboard={true} />,
+      },
+      {
+        path: "users",
+        element: <Users />,
         errorElement: <Error isDashboard={true} />,
       },
       {
