@@ -46,7 +46,7 @@ export const routes = createBrowserRouter([
         errorElement: <Error isDashboard={true} />,
       },
       {
-        path: "profle",
+        path: "profile",
         element: <Profile />,
         errorElement: <Error isDashboard={true} />,
       },
