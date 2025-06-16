@@ -1,6 +1,12 @@
 import express, { Request, Response, urlencoded, json } from "express";
 import { config as loadEnv } from "dotenv";
-import { authRouter, ratingRouter, storeRouter, userRouter } from "./routes";
+import {
+  authRouter,
+  ratingRouter,
+  storeRouter,
+  systemAdminRouter,
+  userRouter,
+} from "./routes";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
@@ -41,6 +47,8 @@ app.use("/api/user", userRouter);
 app.use("/api/store", storeRouter);
 
 app.use("/api/rating", ratingRouter);
+
+app.use("/api/systemadmin", systemAdminRouter);
 
 app.use("/api/*splat", (req, res) => {
   res.status(404).json({
