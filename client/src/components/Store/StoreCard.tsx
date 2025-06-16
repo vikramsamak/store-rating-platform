@@ -32,7 +32,10 @@ export const StoreCard: React.FC<StoreCardProps> = ({
           <span className="font-thin ml-2">{store.averageRating}</span>
         </p>
         <p className="font-bold w-full">
-          Rating:<span className="font-thin ml-2">{store.rating}</span>
+          Rating:
+          <span className="font-thin ml-2">
+            {store.userRating?.value || "NA"}
+          </span>
         </p>
       </div>
 
