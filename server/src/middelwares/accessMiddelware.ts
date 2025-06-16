@@ -6,7 +6,8 @@ export function accessMiddleware(allowedRoles: string[]) {
     const user = req.user;
 
     if (!user || !allowedRoles.includes(user.role)) {
-      return res.status(403).json(errorResponse({ message: "Access denied" }));
+      res.status(403).json(errorResponse({ message: "Access denied" }));
+      return;
     }
 
     next();
