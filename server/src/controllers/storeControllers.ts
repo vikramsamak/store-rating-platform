@@ -2,6 +2,7 @@ import e, { Request, Response } from "express";
 import { errorResponse, successResponse } from "../utils";
 import { prisma } from "../lib";
 import { STORE_OWNER_USER_ROLE } from "../constants";
+import { Role } from "../generated/prisma";
 
 export async function createStore(req: Request, res: Response): Promise<any> {
   try {
@@ -105,7 +106,7 @@ export async function getStores(req: Request, res: Response): Promise<any> {
           : 0;
 
       const userRating =
-        currentUser?.role === "USER"
+        currentUser?.role === Role.USER
           ? store.ratings.find((r) => r.userId === currentUser.id) ?? null
           : null;
 
