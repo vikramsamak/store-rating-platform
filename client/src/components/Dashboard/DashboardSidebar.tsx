@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/sidebar";
 import { APP_DETAILS } from "@/constants";
 import { useAuth } from "@/hooks/use-auth";
-import { Box, User } from "lucide-react";
+import { Star, Store, User } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export const DashboardSidebar = ({
@@ -22,7 +22,7 @@ export const DashboardSidebar = ({
   const COMMON_PAGES = [
     {
       title: "Profile",
-      path: "profle",
+      path: "profile",
       icon: User,
     },
   ];
@@ -36,7 +36,7 @@ export const DashboardSidebar = ({
     {
       title: "Stores",
       path: "stores",
-      icon: Box,
+      icon: Store,
     },
   ];
 
@@ -45,7 +45,7 @@ export const DashboardSidebar = ({
     {
       title: "Stores",
       path: "storelisting",
-      icon: Box,
+      icon: Store,
     },
   ];
 
@@ -54,7 +54,7 @@ export const DashboardSidebar = ({
     {
       title: "Ratings",
       path: "ratings",
-      icon: Box,
+      icon: Star,
     },
   ];
 
