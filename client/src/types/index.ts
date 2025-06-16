@@ -49,7 +49,6 @@ export type Store = {
   name: string;
   email: string;
   address: string;
-  ratings: unknown[];
   averageRating: number;
   userRating?: {
     id: string;
@@ -59,5 +58,16 @@ export type Store = {
       id: string;
       name: string;
     };
+  };
+};
+
+export type Rating = {
+  id: string;
+  value: number;
+  user: { id: string; name: string };
+  store: {
+    id: string;
+    name: string;
+    averageRating: number | null;
   };
 };
