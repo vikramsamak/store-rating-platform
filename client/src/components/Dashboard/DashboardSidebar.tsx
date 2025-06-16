@@ -40,7 +40,14 @@ export const DashboardSidebar = ({
     },
   ];
 
-  const NORMAL_USER__PAGES = [...COMMON_PAGES];
+  const NORMAL_USER__PAGES = [
+    ...COMMON_PAGES,
+    {
+      title: "Stores",
+      path: "storelisting",
+      icon: Box,
+    },
+  ];
 
   const STORE_OWNER_PAGES = [...COMMON_PAGES];
 

@@ -11,6 +11,7 @@ import {
   SignupPage,
   Store,
   Users,
+  StoreListing,
 } from "./pages";
 
 //Routes
@@ -56,6 +57,11 @@ export const routes = createBrowserRouter([
       {
         path: "stores",
         element: <Store />,
+        errorElement: <Error isDashboard={true} />,
+      },
+      {
+        path: "storelisting",
+        element: <StoreListing />,
         errorElement: <Error isDashboard={true} />,
       },
       {
