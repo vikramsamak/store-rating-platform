@@ -37,3 +37,8 @@ export type Stat = {
   label: string;
   value: string | number;
 };
+
+export type GenericSelectOption = {
+  label: string;
+  value: string;
+};
