@@ -31,6 +31,7 @@ export type User = {
   address: string;
   email: string;
   role: string;
+  storeRating?: number;
 };
 
 export type Stat = {
