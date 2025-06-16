@@ -68,8 +68,18 @@ export async function getUsers(req: Request, res: Response): Promise<any> {
         name: true,
         email: true,
         address: true,
-        ratings: true,
         role: true,
+        stores: {
+          select: {
+            id: true,
+            name: true,
+            ratings: {
+              select: {
+                value: true,
+              },
+            },
+          },
+        },
       },
     });
 
@@ -78,10 +88,30 @@ export async function getUsers(req: Request, res: Response): Promise<any> {
       return;
     }
 
+    const usersWithAvgRating = users.map((user) => {
+      let storeRating: number | null = null;
+
+      if (user.role === "STORE_OWNER" && user.stores?.length) {
+        const allRatings = user.stores.flatMap((store) =>
+          store.ratings.map((r) => r.value)
+        );
+
+        if (allRatings.length > 0) {
+          const total = allRatings.reduce((sum, value) => sum + value, 0);
+          storeRating = Number((total / allRatings.length).toFixed(2));
+        }
+      }
+
+      return {
+        ...user,
+        storeRating,
+      };
+    });
+
     res.status(200).json(
       successResponse({
         message: "Users fetched successfully.",
-        data: users,
+        data: usersWithAvgRating,
       })
     );
   } catch (error) {
