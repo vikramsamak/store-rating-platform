@@ -3,7 +3,7 @@ import { DashboardLayout } from "./layouts";
 import {
   AccessDenied,
   DashboardHome,
-  ErrorPage,
+  Error,
   LandingPage,
   NotFound,
   Profile,
@@ -16,45 +16,45 @@ export const routes = createBrowserRouter([
   {
     path: "/",
     element: <LandingPage />,
-    errorElement: <ErrorPage isDashboard={false} />,
+    errorElement: <Error isDashboard={false} />,
   },
 
   {
     path: "/signin",
     element: <SigninPage />,
-    errorElement: <ErrorPage isDashboard={false} />,
+    errorElement: <Error isDashboard={false} />,
   },
 
   {
     path: "/signup",
     element: <SignupPage />,
-    errorElement: <ErrorPage isDashboard={false} />,
+    errorElement: <Error isDashboard={false} />,
   },
 
   {
     path: "/dashboard",
     element: <DashboardLayout />,
-    errorElement: <ErrorPage isDashboard={true} />,
+    errorElement: <Error isDashboard={true} />,
     children: [
       {
         index: true,
         element: <DashboardHome />,
-        errorElement: <ErrorPage isDashboard={true} />,
+        errorElement: <Error isDashboard={true} />,
       },
       {
         path: "profle",
         element: <Profile />,
-        errorElement: <ErrorPage isDashboard={true} />,
+        errorElement: <Error isDashboard={true} />,
       },
       {
         path: "accessdenied",
         element: <AccessDenied isDashboard={true} />,
-        errorElement: <ErrorPage isDashboard={true} />,
+        errorElement: <Error isDashboard={true} />,
       },
       {
         path: "*",
         element: <NotFound isDashboard={true} />,
-        errorElement: <ErrorPage isDashboard={true} />,
+        errorElement: <Error isDashboard={true} />,
       },
     ],
   },

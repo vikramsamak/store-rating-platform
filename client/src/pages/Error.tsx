@@ -6,7 +6,7 @@ interface ErrorPageProps {
   isDashboard?: boolean;
 }
 
-export const ErrorPage: React.FC<ErrorPageProps> = ({
+export const Error: React.FC<ErrorPageProps> = ({
   isDashboard = false,
 }: ErrorPageProps) => {
   if (isDashboard) {
