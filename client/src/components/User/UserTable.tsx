@@ -6,8 +6,13 @@ import { Skeleton } from "../ui/skeleton";
 import { User } from "@/services";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/use-auth";
+import { useMemo } from "react";
 
-export const UserTable = () => {
+interface UserTableProps {
+  searchQuery: string;
+}
+
+export const UserTable: React.FC<UserTableProps> = ({ searchQuery }) => {
   const { authUser } = useAuth();
 
   const getUsers = async () => {
@@ -27,9 +32,21 @@ export const UserTable = () => {
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["USER", "UPDATE_ON_USERS", authUser?.id],
+    queryKey: ["USER", "UPDATE_ON_USER", authUser?.id],
     queryFn: getUsers,
   });
+
+  const filteredUsers = useMemo(() => {
+    if (!searchQuery) return users;
+
+    const query = searchQuery.toLowerCase();
+
+    return users?.filter((user) =>
+      [user.name, user.email, user.address, user.role].some((field) =>
+        field.toLowerCase().includes(query)
+      )
+    );
+  }, [users, searchQuery]);
 
   if (isLoading) {
     return <Skeleton className="h-full w-full" />;
@@ -42,13 +59,15 @@ export const UserTable = () => {
   return (
     <GenericTable
       tableHeaders={["Name", "Email", "Address", "Role"]}
-      data={users ?? []}
+      data={filteredUsers ?? []}
       renderRow={(user: Usertype, i) => (
         <TableRow key={i}>
           <TableCell>{user.name}</TableCell>
           <TableCell>{user.email}</TableCell>
           <TableCell>{user.address}</TableCell>
-          <TableCell>{user.role}</TableCell>
+          <TableCell className="capitalize">
+            {user.role.toLowerCase().replace("_", " ")}
+          </TableCell>
         </TableRow>
       )}
     />
