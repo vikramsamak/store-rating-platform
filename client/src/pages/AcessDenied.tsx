@@ -11,14 +11,16 @@ export const AccessDenied: React.FC<AcessDeniedProps> = ({
   isDashboard = false,
 }: AcessDeniedProps) => {
   if (isDashboard) {
-    <DashBoardPageWrapper className="flex w-full h-full justify-center items-center">
-      <Alert className="max-w-md w-full shadow-lg" variant="destructive">
-        <Terminal className="h-5 w-5" />
-        <AlertTitle className="text-lg">
-          Access Denied — You’re not authorized to view this page.
-        </AlertTitle>
-      </Alert>
-    </DashBoardPageWrapper>;
+    return (
+      <DashBoardPageWrapper className="flex w-full h-full justify-center items-center">
+        <Alert className="max-w-md w-full shadow-lg" variant="destructive">
+          <Terminal className="h-5 w-5" />
+          <AlertTitle className="text-lg">
+            Access Denied — You’re not authorized to view this page.
+          </AlertTitle>
+        </Alert>
+      </DashBoardPageWrapper>
+    );
   }
 
   return (

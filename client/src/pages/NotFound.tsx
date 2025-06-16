@@ -11,12 +11,14 @@ export const NotFound: React.FC<NotFoundPageProps> = ({
   isDashboard = false,
 }: NotFoundPageProps) => {
   if (isDashboard) {
-    <DashBoardPageWrapper className="flex w-full h-full justify-center items-center">
-      <Alert className="max-w-md w-full shadow-lg" variant="destructive">
-        <Terminal className="h-5 w-5" />
-        <AlertTitle className="text-lg">Page Not Found</AlertTitle>
-      </Alert>
-    </DashBoardPageWrapper>;
+    return (
+      <DashBoardPageWrapper className="flex w-full h-full justify-center items-center">
+        <Alert className="max-w-md w-full shadow-lg" variant="destructive">
+          <Terminal className="h-5 w-5" />
+          <AlertTitle className="text-lg">Page Not Found</AlertTitle>
+        </Alert>
+      </DashBoardPageWrapper>
+    );
   }
 
   return (

@@ -48,7 +48,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: "accessdenied",
-        element: <AccessDenied />,
+        element: <AccessDenied isDashboard={true} />,
         errorElement: <ErrorPage isDashboard={true} />,
       },
       {
