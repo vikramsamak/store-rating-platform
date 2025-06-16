@@ -24,3 +24,11 @@ export type BaseFormField = {
   props?: Record<string, unknown>;
   description?: string;
 };
+
+export type User = {
+  id: string;
+  name: string;
+  address: string;
+  email: string;
+  role: string;
+};
