@@ -48,4 +48,5 @@ export type Store = {
   email: string;
   address: string;
   rating: number;
+  averageRating: number;
 };
