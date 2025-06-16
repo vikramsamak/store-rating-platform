@@ -51,4 +51,13 @@ export type Store = {
   address: string;
   rating: number;
   averageRating: number;
+  userRating?: {
+    id: string;
+    value: number;
+    userId: string;
+    user: {
+      id: string;
+      name: string;
+    };
+  };
 };
