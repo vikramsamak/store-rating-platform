@@ -8,3 +8,4 @@ export { DashboardHome } from "./DashboardHome";
 export { AccessDenied } from "./AcessDenied";
 export { Users } from "./Users";
 export { Store } from "./Store";
+export { StoreListing } from "./StoreListing";
