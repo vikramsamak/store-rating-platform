@@ -49,7 +49,14 @@ export const DashboardSidebar = ({
     },
   ];
 
-  const STORE_OWNER_PAGES = [...COMMON_PAGES];
+  const STORE_OWNER_PAGES = [
+    ...COMMON_PAGES,
+    {
+      title: "Ratings",
+      path: "ratings",
+      icon: Box,
+    },
+  ];
 
   const items =
     authUser?.role === "SYSTEM_ADMIN"
