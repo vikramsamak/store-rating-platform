@@ -1,13 +1,12 @@
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import type { BaseFormField } from "@/types";
 
-export const signupFormFields: {
+interface SignUpFormField extends BaseFormField {
   name: "name" | "email" | "address" | "password" | "confirmPassword";
-  label: string;
-  component: React.ElementType;
-  props?: Record<string, unknown>;
-  description?: string;
-}[] = [
+}
+
+export const signupFormFields: SignUpFormField[] = [
   {
     name: "name",
     label: "Full Name",
@@ -21,7 +20,7 @@ export const signupFormFields: {
     label: "Email",
     component: Input,
     props: {
-      type: "text",
+      type: "email",
     },
   },
   {
