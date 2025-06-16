@@ -36,6 +36,8 @@ export const DasboardHeader = () => {
     }
   };
 
+  console.log(currentPage.pathname);
+
   return (
     <header className="flex h-16 shrink-0 items-center justify-between gap-2 border-b px-4 sticky top-0 z-10">
       <div className="flex items-center gap-2">
@@ -45,7 +47,9 @@ export const DasboardHeader = () => {
           className="mr-2 data-[orientation=vertical]:h-4"
         />
         <p className="capitalize">
-          {currentPage.pathname.replace("/dashboard/", "")}
+          {currentPage.pathname === "/dashboard"
+            ? "Home"
+            : currentPage.pathname.replace("/dashboard/", "")}
         </p>
       </div>
       <Button
