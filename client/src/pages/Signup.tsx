@@ -17,9 +17,12 @@ import { Auth } from "@/services";
 import { toast } from "sonner";
 import { useState } from "react";
 import { LoadingSpinner } from "@/components/Generics/LoadingSpinner";
+import { useNavigate } from "react-router-dom";
 
 export const SignupPage = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+
   const signupValidationSchema = z
     .object({
       name: z
@@ -68,12 +71,14 @@ export const SignupPage = () => {
     if (isLoading) return;
     try {
       const response = await Auth.signUp(values);
-      console.log("Signup response:", response);
-      toast.success(response.message);
+      if (response.success) {
+        toast.success(response.message);
+        navigate("/signin");
+      }
     } catch (error) {
-      const message =
+      const errorMessage =
         error instanceof Error ? error.message : "Something went wrong.";
-      toast.error(message);
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
