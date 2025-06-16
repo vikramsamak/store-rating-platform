@@ -9,6 +9,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { APP_DETAILS } from "@/constants";
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
 
 export const DashboardSidebar = ({
@@ -45,7 +46,7 @@ export const DashboardSidebar = ({
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <div className="p-2 w-full bg-muted">App Name</div>
+        <div className="p-2 w-full font-bold text-base">{APP_DETAILS.appName}</div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
