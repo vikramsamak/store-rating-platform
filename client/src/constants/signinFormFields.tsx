@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import type { BaseFormField } from "@/types";
 
 interface SignInFormField extends BaseFormField {
-  name: "name" | "email" | "address" | "password" | "confirmPassword";
+  name: "email" | "password";
 }
 
 export const signinFormFields: SignInFormField[] = [
