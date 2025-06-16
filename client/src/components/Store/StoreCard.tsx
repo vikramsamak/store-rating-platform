@@ -2,44 +2,42 @@ import type { Store } from "@/types";
 import type React from "react";
 import { Button } from "../ui/button";
 
-interface StoreCardProps extends Store {
-  opneRatingModal: () => void;
+interface StoreCardProps {
+  store: Store;
+  opneRatingModal: (store: Store) => void;
 }
 
 export const StoreCard: React.FC<StoreCardProps> = ({
-  name,
-  email,
-  averageRating,
-  rating,
-  address,
+  store,
   opneRatingModal,
 }) => {
   return (
     <div className="flex flex-col gap-2 w-full h-full p-2 rounded-md bg-muted">
       <div className="flex flex-row w-full my-2">
         <p className="font-bold w-full gap-2">
-          Name:<span className="font-thin ml-2">{name}</span>
+          Name:<span className="font-thin ml-2">{store.name}</span>
         </p>
         <p className="font-bold w-full">
-          Email:<span className="font-thin ml-2">{email}</span>
+          Email:<span className="font-thin ml-2">{store.email}</span>
         </p>
       </div>
 
       <p className="font-bold w-full my-2">
-        Address:<span className="font-thin ml-2">{address}</span>
+        Address:<span className="font-thin ml-2">{store.address}</span>
       </p>
 
       <div className="flex flex-row w-full gap-2 my-2">
         <p className="font-bold w-full">
-          Average Rating:<span className="font-thin ml-2">{averageRating}</span>
+          Average Rating:
+          <span className="font-thin ml-2">{store.averageRating}</span>
         </p>
         <p className="font-bold w-full">
-          Rating:<span className="font-thin ml-2">{rating}</span>
+          Rating:<span className="font-thin ml-2">{store.rating}</span>
         </p>
       </div>
 
       <div className="flex w-full justify-end">
-        <Button variant="default" onClick={opneRatingModal}>
+        <Button variant="default" onClick={() => opneRatingModal(store)}>
           Give Rating
         </Button>
       </div>
