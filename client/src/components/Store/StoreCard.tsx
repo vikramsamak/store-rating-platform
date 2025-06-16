@@ -12,7 +12,7 @@ export const StoreCard: React.FC<StoreCardProps> = ({
   opneRatingModal,
 }) => {
   return (
-    <div className="flex flex-col gap-2 w-full h-full p-2 rounded-md bg-muted">
+    <div className="flex flex-col gap-2 w-full h-full p-2 rounded-md bg-muted shadow-md border">
       <div className="flex flex-row w-full my-2">
         <p className="font-bold w-full gap-2">
           Name:<span className="font-thin ml-2">{store.name}</span>
