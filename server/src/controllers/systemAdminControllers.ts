@@ -12,11 +12,11 @@ export async function getSystemAdminOverview(req: Request, res: Response) {
     res.status(200).json({
       success: true,
       message: "System admin dashboard stats fetched",
-      data: {
-        totalUsers,
-        totalStores,
-        totalRatings,
-      },
+      data: [
+        { label: "Total Users", value: totalUsers },
+        { label: "Total Stores", value: totalStores },
+        { label: "Total Ratings", value: totalRatings },
+      ],
     });
   } catch (error) {
     console.error("Error fetching admin overview:", error);
