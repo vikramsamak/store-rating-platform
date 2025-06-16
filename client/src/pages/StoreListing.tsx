@@ -5,13 +5,26 @@ import { StoreListingList } from "@/components/Store/StoreListingList";
 import { StoreRatingForm } from "@/components/Store/StoreRatingForm";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/use-auth";
-import { useState } from "react";
+import type { Store } from "@/types";
+import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
 export const StoreListing = () => {
   const { authUser } = useAuth();
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isRatingModalOpen, setRatingModalOpen] = useState<boolean>(false);
+  const [selectedStore, setSelectedStore] = useState<Store | null>(null);
+
+  useEffect(() => {
+    if (!isRatingModalOpen) {
+      setSelectedStore(null);
+    }
+  }, [isRatingModalOpen]);
+
+  const opneRatingModal = (store: Store) => {
+    setSelectedStore(store);
+    setRatingModalOpen(true);
+  };
 
   if (authUser?.role !== "USER") {
     return <Navigate to={"/dashboard/acessdenied"} />;
@@ -32,7 +45,7 @@ export const StoreListing = () => {
             </div>
             <StoreListingList
               searchQuery={searchQuery}
-              opneRatingModal={() => setRatingModalOpen(true)}
+              opneRatingModal={(store: Store) => opneRatingModal(store)}
             />
           </div>
         }
@@ -42,7 +55,10 @@ export const StoreListing = () => {
         <GenericModal
           isModalOpen={isRatingModalOpen}
           modalContent={
-            <StoreRatingForm closeUserModal={() => setRatingModalOpen(false)} />
+            <StoreRatingForm
+              closeRatingModal={() => setRatingModalOpen(false)}
+              selectedStore={selectedStore}
+            />
           }
           modalTitle="Rating"
           onOpenChange={(isOpen: boolean) => setRatingModalOpen(isOpen)}
