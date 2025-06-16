@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { errorResponse, successResponse } from "../utils";
 import { prisma } from "../lib";
+import { Role } from "../generated/prisma";
 
 export async function createRating(req: Request, res: Response): Promise<any> {
   try {
@@ -59,10 +60,29 @@ export async function getRatings(req: Request, res: Response): Promise<any> {
       value?: string;
     };
 
+    const currentUser = req.user;
+
+    let storeIds: string[] | undefined;
+
+    if (currentUser?.role === Role.STORE_OWNER) {
+      const ownedStores = await prisma.store.findMany({
+        where: { ownerId: currentUser.id },
+        select: { id: true },
+      });
+
+      storeIds = ownedStores.map((s) => s.id);
+      if (storeIds.length === 0) {
+        return res
+          .status(200)
+          .json(successResponse({ message: "No ratings found.", data: [] }));
+      }
+    }
+
     const filter = {
       ...(storeId ? { storeId } : {}),
       ...(userId ? { userId } : {}),
       ...(value ? { value: Number(value) } : {}),
+      ...(storeIds ? { storeId: { in: storeIds } } : {}),
     };
 
     const ratings = await prisma.rating.findMany({
@@ -70,18 +90,9 @@ export async function getRatings(req: Request, res: Response): Promise<any> {
       select: {
         id: true,
         value: true,
-        user: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-        store: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
+        storeId: true,
+        user: { select: { id: true, name: true } },
+        store: { select: { id: true, name: true } },
       },
     });
 
@@ -90,10 +101,34 @@ export async function getRatings(req: Request, res: Response): Promise<any> {
       return;
     }
 
+    const ratingsWithAverages = ratings.map((rating) => {
+      const storeId = rating.storeId;
+
+      const storeRatings = ratings
+        .filter((r) => r.storeId === storeId)
+        .map((r) => r.value);
+
+      const averageRating = storeRatings.length
+        ? Number(
+            (
+              storeRatings.reduce((a, b) => a + b, 0) / storeRatings.length
+            ).toFixed(2)
+          )
+        : 0;
+
+      return {
+        ...rating,
+        store: {
+          ...rating.store,
+          averageRating,
+        },
+      };
+    });
+
     res.status(200).json(
       successResponse({
         message: "Ratings fetched successfully.",
-        data: ratings,
+        data: ratingsWithAverages,
       })
     );
   } catch (error) {
