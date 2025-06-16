@@ -9,7 +9,7 @@ import { StoreCard } from "./StoreCard";
 
 interface StoreListingListProps {
   searchQuery: string;
-  opneRatingModal: () => void;
+  opneRatingModal: (store: StoreType) => void;
 }
 
 export const StoreListingList: React.FC<StoreListingListProps> = ({
@@ -64,12 +64,8 @@ export const StoreListingList: React.FC<StoreListingListProps> = ({
       {filteredStores?.map((store, i) => (
         <StoreCard
           key={i}
-          address={store.address}
-          averageRating={store.averageRating}
-          name={store.name}
-          email={store.email}
-          rating={store.rating}
-          opneRatingModal={opneRatingModal}
+          store={store}
+          opneRatingModal={(store: StoreType) => opneRatingModal(store)}
         />
       ))}
     </div>
