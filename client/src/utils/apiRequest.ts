@@ -1,8 +1,10 @@
 import axios from "axios";
-import type { ApiRequestOptions } from "../types";
+import type { ApiRequestOptions, SuccessApiResponse } from "../types";
 import { envConfig } from "../configs";
 
-export async function apiRequest(options: ApiRequestOptions): Promise<unknown> {
+export async function apiRequest(
+  options: ApiRequestOptions
+): Promise<SuccessApiResponse> {
   const {
     url,
     method = "GET",
