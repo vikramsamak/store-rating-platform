@@ -64,7 +64,7 @@ app.listen(PORT, () => {
 });
 
 const shutdown = async () => {
-  console.log("\nShutting down gracefully...");
+  console.log("\nShutting down...");
   await prisma.$disconnect();
   process.exit(0);
 };
