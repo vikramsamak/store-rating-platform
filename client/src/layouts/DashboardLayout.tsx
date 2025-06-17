@@ -1,9 +1,16 @@
 import { DasboardHeader } from "@/components/Dashboard/DasboardHeader";
 import { DashboardSidebar } from "@/components/Dashboard/DashboardSidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { Outlet } from "react-router-dom";
+import { useAuth } from "@/hooks/use-auth";
+import { Navigate, Outlet } from "react-router-dom";
 
 export const DashboardLayout = () => {
+  const { authUser } = useAuth();
+
+  if (!authUser) {
+    return <Navigate to="/signin" />;
+  }
+
   return (
     <SidebarProvider>
       <DashboardSidebar />
